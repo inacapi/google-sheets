@@ -1,0 +1,34 @@
+{
+  "name": "google-sheets",
+  "version": "1.0.0",
+  "description": "Aplicación para obtener las notas de un semestre específico y subirlas a google sheets",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inacapi/google-sheets.git"
+  },
+  "keywords": [
+    "google-sheets",
+    "inacapi"
+  ],
+  "author": "Inacapi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inacapi/google-sheets/issues"
+  },
+  "homepage": "https://github.com/inacapi/google-sheets#readme",
+  "dependencies": {
+    "googleapis": "^110.0.0",
+    "node-fetch-cookies": "^2.0.4",
+    "node-html-parser": "^6.1.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
