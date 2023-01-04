@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { obtener_token, seccion as obtener_datos_seccion } from './utils.js'
+import { obtener_token, seccion as obtener_datos_seccion, subir_datos } from './utils.js'
 
 const main = async () => {
     if (!process.env.USERNAME) {
@@ -28,16 +28,18 @@ const main = async () => {
         return
     }
 
-    const config = JSON.parse(fs.readFileSync('config.json', 'utf-8'))[process.env.SEMESTER]
-    let datos_secciones = []
+    const config = JSON.parse(fs.readFileSync('config.json', 'utf-8'))
+    const config_semestre = config[process.env.SEMESTER]
 
-    for (let seccion of config['secciones']) {
-        datos_secciones.push(obtener_datos_seccion(token['token'], config['matricula'], seccion, config['periodo']))
+    let datos_secciones = []
+    for (let seccion of config_semestre['secciones']) {
+        datos_secciones.push(obtener_datos_seccion(token['token'], config_semestre['matricula'], seccion, config_semestre['periodo']))
     }
 
     datos_secciones = await Promise.all(datos_secciones)
+    const rangos = config['rangos']
 
-    subir_datos(datos_secciones)
+    subir_datos(datos_secciones, rangos)
 }
 
 main()

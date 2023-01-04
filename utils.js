@@ -71,3 +71,33 @@ export const seccion = async (token, matricula, seccion, periodo) => {
 
     return { error: '', data: await respuesta.json() }
 }
+
+export const subir_datos = async (datos_secciones, rangos) => {
+    const datos = []
+    for (const [i, seccion] of Object.entries(datos_secciones)) {
+        const notas = { values: [], range: '' }
+        const metadatos = { values: [], range: '', majorDimension: 'COLUMNS' }
+
+        if (seccion.error || seccion.data.notas.length === 0) continue
+
+        for (const evaluacion of seccion.data.notas) {
+            if (!notas['range']) {
+                notas['range'] = `${evaluacion['']}!${rangos[i][1]}`
+            }
+            notas['values'].push([
+                evaluacion['caliFevaluacion'], evaluacion['caliNponderacion'],
+                evaluacion['calaNnota'], evaluacion['promedioCalificacion'],
+            ])
+            if (metadatos['values'].length !== 1) {
+                metadatos['values'].push([
+                    evaluacion['asigTdesc'], evaluacion['nombreProfesor'],
+                    evaluacion['sitfCcod'], evaluacion['cargNasistencia'],
+                    evaluacion['cargNnotaPresentacion'], evaluacion['cargNnotaFinal']
+                ])
+            }
+        }
+
+        datos.push(notas)
+        datos.push(metadatos)
+    }
+}
