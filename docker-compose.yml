@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  google-sheets:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: google-sheets
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - USERNAME=
+      - PASSWORD=
+      - SHEET_ID=
+      - SEMESTER=
