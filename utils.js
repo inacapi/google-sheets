@@ -1,5 +1,6 @@
 import { fetch, CookieJar } from 'node-fetch-cookies'
 import { parse } from 'node-html-parser'
+import { google } from 'googleapis'
 
 const adfs = 'https://adfs.inacap.cl/adfs/ls/?wtrealm=https://siga.inacap.cl/sts/&wa=wsignin1.0&wreply=https://siga.inacap.cl/sts/&wctx=https%3a%2f%2fadfs.inacap.cl%2fadfs%2fls%2f%3fwreply%3dhttps%3a%2f%2fwww.inacap.cl%2ftportalvp%2fintranet-alumno%26wtrealm%3dhttps%3a%2f%2fwww.inacap.cl%2f'
 const sts = 'https://siga.inacap.cl/sts/'
@@ -73,20 +74,24 @@ export const seccion = async (token, matricula, seccion, periodo) => {
 }
 
 export const subir_datos = async (datos_secciones, rangos) => {
+    const auth = new google.auth.GoogleAuth({
+        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        keyFile: 'credentials.json',
+    })
+    const client = await auth.getClient()
+    const sheets = google.sheets({ version: 'v4', auth: client })
+
     const datos = []
     for (const [i, seccion] of Object.entries(datos_secciones)) {
-        const notas = { values: [], range: '' }
-        const metadatos = { values: [], range: '', majorDimension: 'COLUMNS' }
+        const notas = { values: [], range: `${process.env.SHEET_NAME}!${rangos[i][1]}` }
+        const metadatos = { values: [], range: `${process.env.SHEET_NAME}!${rangos[i][0]}`, majorDimension: 'COLUMNS' }
 
         if (seccion.error || seccion.data.notas.length === 0) continue
 
         for (const evaluacion of seccion.data.notas) {
-            if (!notas['range']) {
-                notas['range'] = `${evaluacion['']}!${rangos[i][1]}`
-            }
             notas['values'].push([
                 evaluacion['caliFevaluacion'], evaluacion['caliNponderacion'],
-                evaluacion['calaNnota'], evaluacion['promedioCalificacion'],
+                parse_number(evaluacion['calaNnota']), parse_number(evaluacion['promedioCalificacion'])
             ])
             if (metadatos['values'].length !== 1) {
                 metadatos['values'].push([
@@ -100,4 +105,14 @@ export const subir_datos = async (datos_secciones, rangos) => {
         datos.push(notas)
         datos.push(metadatos)
     }
+
+    sheets.spreadsheets.values.batchUpdate({
+        spreadsheetId: process.env.SHEET_ID,
+        requestBody: { valueInputOption: 'USER_ENTERED', data: datos }
+    })
+}
+
+const parse_number = (str) => {
+    const number = parseFloat(str)
+    return isNaN(number) ? '' : number * 10
 }
