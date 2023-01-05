@@ -1,4 +1,5 @@
 import { obtener_token, seccion, subir_datos } from './utils.js'
+import fs from 'fs'
 
 const main = async () => {
     const env = ['USERNAME', 'PASSWORD', 'PERIODO', 'MATRICULA', 'SECCIONES', 'SHEET_NAME', 'SHEET_ID', 'RANGES']
@@ -7,6 +8,11 @@ const main = async () => {
             console.log(`Falta la variable de entorno ${variable}`)
             return
         }
+    }
+
+    if (!fs.existsSync('credentials.json')) {
+        console.log('No se encontró el archivo credentials.json')
+        return
     }
 
     const token = await obtener_token(process.env.USERNAME, process.env.PASSWORD)
