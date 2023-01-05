@@ -73,13 +73,14 @@ export const seccion = async (token, matricula, seccion, periodo) => {
     return { error: '', data: await respuesta.json() }
 }
 
-export const subir_datos = async (datos_secciones, rangos) => {
+export const subir_datos = async (datos_secciones) => {
     const auth = new google.auth.GoogleAuth({
         scopes: ['https://www.googleapis.com/auth/spreadsheets'],
         keyFile: 'credentials.json',
     })
     const client = await auth.getClient()
     const sheets = google.sheets({ version: 'v4', auth: client })
+    const rangos = process.env.RANGES.split(',').map(r => r.split('-'))
 
     const datos = []
     for (const [i, seccion] of Object.entries(datos_secciones)) {
@@ -102,8 +103,7 @@ export const subir_datos = async (datos_secciones, rangos) => {
             }
         }
 
-        datos.push(notas)
-        datos.push(metadatos)
+        datos.push(notas, metadatos)
     }
 
     sheets.spreadsheets.values.batchUpdate({

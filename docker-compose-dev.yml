@@ -7,10 +7,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: google-sheets-dev
     restart: always
-    environment:
-      - USERNAME=
-      - PASSWORD=
-      - SHEET_ID=
-      - SEMESTER=
+    env_file:
+      - .env
     volumes:
       - .:/app

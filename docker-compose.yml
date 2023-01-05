@@ -7,9 +7,5 @@ services:
       dockerfile: Dockerfile
     container_name: google-sheets
     restart: always
-    environment:
-      - NODE_ENV=production
-      - USERNAME=
-      - PASSWORD=
-      - SHEET_ID=
-      - SEMESTER=
+    env_file:
+      - .env
