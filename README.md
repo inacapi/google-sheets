@@ -24,12 +24,19 @@ La plantilla de notas se ve así:
 ![Screenshot_20230105_212231](https://user-images.githubusercontent.com/22999877/210904849-bb9bbb58-7ab2-4f7b-a952-ba56991140eb.jpeg)
 
 ## Variables de entorno
-Finalmente solo queda modificar el archivo .env para incluir el resto de información,
-USERNAME y PASSWORD son nuestros datos de inicio de sesión de inacap. Periodo,
-matrícula y secciones son los id de esas cosas respectivamente, los podemos
-obtener con las herramientas de desarrollador al ver cualquier clase en el tablero
-académico. SHEET_NAME es el nombre de la hoja en particular del cuaderno de las
-hojas de cálculo que creamos, es necesario crear una hoja por semestre. SHEET_ID
-es el id de la hoja de cálculo, lo podemos copiar desde la url, y RANGES son los
-rangos separados por comas y signos menos donde se van a subir los datos, si no se
-cambia el orden de las tablas de la plantilla no hace falta cambiar esto.
+Por último debemos reemplazar las variables de entorno necesarias.
+| KEY | DESCRIPTION |
+| --- | --- |
+| USERNAME | Nombre de usuario de inacap (tiene que ser el correo) |
+| PASSWORD | Contraseña de inacap |
+| PERIODO | El id del periodo |
+| MATRICULA | El id de nuestra matrícula |
+| SECCIONES | Los de id de nuestras secciones para ese periodo |
+| SHEET_NAME | El nombre de la hoja en que subir los datos |
+| SHEET_ID | El id de la hoja de cálculo |
+| RANGES | Los rangos donde subir los datos en la hoja |
+
+- PERIODO, MATRICULA y SECCIONES las podemos obtener a través de las herramientas
+de desarrollador viendo las peticiones que se envían a la api de inacap al pulsar
+cada asignatura en el tablero académico.
+- RANGES no hace cambiarlo si no cambiamos el orden de las tablas en la plantilla.
