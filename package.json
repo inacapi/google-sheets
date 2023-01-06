@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/inacapi/google-sheets#readme",
   "dependencies": {
-    "googleapis": "^110.0.0",
+    "@googleapis/sheets": "^4.0.1",
     "node-fetch-cookies": "^2.0.4",
     "node-html-parser": "^6.1.4"
   },
