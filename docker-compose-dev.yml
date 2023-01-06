@@ -8,6 +8,6 @@ services:
     container_name: google-sheets-dev
     restart: always
     env_file:
-      - .env
+      - dev.env
     volumes:
       - .:/app
