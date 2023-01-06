@@ -35,8 +35,17 @@ Por último debemos reemplazar las variables de entorno necesarias.
 | SHEET_NAME | El nombre de la hoja en que subir los datos |
 | SHEET_ID | El id de la hoja de cálculo |
 | RANGES | Los rangos donde subir los datos en la hoja |
+| INTERVAL | El tiempo en minutos entre cada ejecución |
 
 - PERIODO, MATRICULA y SECCIONES las podemos obtener a través de las herramientas
 de desarrollador viendo las peticiones que se envían a la api de inacap al pulsar
 cada asignatura en el tablero académico.
 - RANGES no hace cambiarlo si no cambiamos el orden de las tablas en la plantilla.
+
+## Contenedor
+Para finalizar, si ya tenemos todo configurado solo basta con ejecutar el siguiente
+comando:
+```
+docker compose up
+```
+y la aplicación estará corriendo dentro del contendor, manteniendo las notas actualizadas.
