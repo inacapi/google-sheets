@@ -2,7 +2,7 @@ import { obtener_token, seccion, subir_datos } from './utils.js'
 import fs from 'fs'
 
 const main = async () => {
-    const env = ['USERNAME', 'PASSWORD', 'PERIODO', 'MATRICULA', 'SECCIONES', 'SHEET_NAME', 'SHEET_ID', 'RANGES']
+    const env = ['USERNAME', 'PASSWORD', 'PERIODO', 'MATRICULA', 'SECCIONES', 'SHEET_NAME', 'SHEET_ID', 'RANGES', 'INTERVAL']
     for (const variable of env) {
         if (!process.env[variable]) {
             console.log(`Falta la variable de entorno ${variable}`)
@@ -28,6 +28,9 @@ const main = async () => {
 
     datos = await Promise.all(datos)
     subir_datos(datos)
+
+    const interval = parseFloat(process.env.INTERVAL) || 30
+    setTimeout(main, 1000 * 60 * interval)
 }
 
 main()
