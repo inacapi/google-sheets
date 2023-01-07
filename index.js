@@ -23,13 +23,16 @@ const main = async () => {
 
     let datos = []
     process.env.SECCIONES.split(',').forEach((id_seccion) => {
+        console.log(`Obteniendo datos de ${process.env.PERIODO}:${id_seccion}:${process.env.MATRICULA}...`)
         datos.push(seccion(token['token'], process.env.MATRICULA, id_seccion, process.env.PERIODO))
     })
 
     datos = await Promise.all(datos)
+    console.log('Subiendo datos a Google Sheets...')
     subir_datos(datos)
 
     const interval = parseFloat(process.env.INTERVAL) || 30
+    console.log(`Esperando ${interval} minutos...`)
     setTimeout(main, 1000 * 60 * interval)
 }
 

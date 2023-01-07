@@ -7,6 +7,7 @@ const sts = 'https://siga.inacap.cl/sts/'
 
 export const obtener_token = async (nombre, contraseña) => {
     const cookieJar = new CookieJar()
+    console.log(`Iniciando sesión con ${nombre} y ${contraseña}...`)
     const respuesta = await fetch(cookieJar, adfs, {
         method: 'POST',
         body: new URLSearchParams({
@@ -27,6 +28,7 @@ export const obtener_token = async (nombre, contraseña) => {
         return { error: 'No se pudo obtener el token', token: '' }
     }
 
+    console.log('Obteniendo token...')
     await fetch(cookieJar, sts, {
         method: 'POST',
         headers: { 'Referer': 'https://adfs.inacap.cl/' },
