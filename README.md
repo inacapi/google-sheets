@@ -28,7 +28,7 @@ como `credentials.json`, debemos guardar la ruta porque luego debemos mover el
 archivo al contenedor, de lo contrario no va funcionar. El video siguiente
 muestra cómo hacerlo:
 
-![Google Cloud](assets/Google%20Cloud.mp4)
+https://user-images.githubusercontent.com/22999877/211126987-a6ff5c32-5b9e-4b37-a073-93e1016b8fd8.mp4
 
 ## Plantilla para las notas
 Las notas deben subirse a una hoja de cálculo. Recomiendo usar
